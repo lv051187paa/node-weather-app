@@ -42,15 +42,15 @@ app.get('/help', (req, res) => {
 });
 
 app.get('/weather', (req, res) => {
-	const { address } = req.query;
+	const { address, latitude, longitude } = req.query;
 
-	geocode(address, (error, data) => {
+	geocode({ address, latitude, longitude }, (error, data) => {
 		if (error) {
 			return res.send({
 				error
 			});
 		}
-		if (!address) {
+		if (!address && !latitude && !longitude) {
 			return res.send({
 				error: 'An address must be provided'
 			});
